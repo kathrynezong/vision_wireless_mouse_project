@@ -63,11 +63,18 @@ For example, `50,0` moves the pointer 50 pixels to the right.
 - Bash for the current proof-of-concept test
 - C++17 and OpenCV for the planned tracking integration
 
-The UDP sender can be compiled on Raspberry Pi/Linux or Windows. On Raspberry
-Pi/Linux, use `g++ -std=c++17 -Wall -Wextra -pedantic
-vision_mouse_sender.cpp -o vision_mouse_sender`. On Windows with MinGW, use
-`g++ -std=c++17 -Wall -Wextra -pedantic vision_mouse_sender.cpp -lws2_32 -o
-vision_mouse_sender.exe`.
+The UDP sender can be compiled on Raspberry Pi/Linux or Windows. From the
+`sender/` directory, on Raspberry Pi/Linux use:
+
+```bash
+g++ -std=c++17 -Wall -Wextra -pedantic main.cpp udp_sender.cpp -o vision_mouse_sender
+```
+
+On Windows with MinGW, use:
+
+```bash
+g++ -std=c++17 -Wall -Wextra -pedantic main.cpp udp_sender.cpp -lws2_32 -o vision_mouse_sender.exe
+```
 
 ## Quick start
 
