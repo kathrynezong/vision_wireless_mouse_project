@@ -53,11 +53,11 @@ Cursor Movement
 **Objective:** Extend the UDP sender to support continuous movement updates without restarting the program.
 
 ### Tasks
-- [ ] Refactor UDP transmission into a reusable function or class.
-- [ ] Implement a continuous movement update loop.
-- [ ] Simulate movement using predefined dx and dy values.
-- [ ] Implement a configurable update frequency.
-- [ ] Support clean shutdown and socket cleanup.
+- [x] Refactor UDP transmission into a reusable function or class.
+- [x] Implement a finite continuous movement update loop.
+- [x] Simulate movement using predefined dx and dy values.
+- [x] Implement a configurable update frequency.
+- [x] Support clean shutdown and socket cleanup.
 - [ ] Test repeated movement commands and communication reliability.
 
 **Deliverable:** A reusable UDP communication module that can transmit movement commands continuously.
@@ -179,7 +179,7 @@ Potential features to explore after the core system is working:
 | Phase | Milestone | Status |
 |---|---|---|
 | 1 | UDP Communication | Completed (core functionality) |
-| 2 | Continuous Mouse Communication | Next |
+| 2 | Continuous Mouse Communication | In progress |
 | 3 | Computer Vision and Tracking | Not Started |
 | 4 | Movement Processing and Cursor Mapping | Not Started |
 | 5 | System Integration | Not Started |

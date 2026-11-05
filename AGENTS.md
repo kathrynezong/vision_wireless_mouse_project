@@ -76,7 +76,8 @@ When assisting with development:
 ## Current Project Status
 
 - Basic UDP sender: Implemented and manually verified.
-- Continuous UDP transmission: Planned next.
+- Continuous UDP transmission: Finite test sequence implemented; network
+  reliability testing remains.
 - Computer vision tracking: Not yet implemented.
 - Vision-to-cursor integration: Not yet implemented.
 

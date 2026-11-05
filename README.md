@@ -6,7 +6,8 @@ lightweight UDP receiver that controls the laptop cursor with PyAutoGUI.
 
 > [!NOTE]
 > The Pi-to-laptop UDP link has been validated with manual movement packets.
-> Automatic OpenCV tracking and the C++ sender are the next development steps.
+> The C++ sender now supports finite continuous test sequences. Automatic
+> OpenCV tracking is the next development step.
 
 ## Project status
 
@@ -15,7 +16,7 @@ lightweight UDP receiver that controls the laptop cursor with PyAutoGUI.
 | Laptop UDP receiver | Working prototype |
 | Pi-to-laptop network test | Verified |
 | Relative cursor movement | Verified |
-| C++ UDP sender | Planned |
+| C++ UDP sender | Continuous test sequence implemented |
 | OpenCV tracking integration | Planned |
 | Smoothing and gesture input | Planned |
 
@@ -75,6 +76,16 @@ On Windows with MinGW, use:
 ```bash
 g++ -std=c++17 -Wall -Wextra -pedantic main.cpp udp_sender.cpp -lws2_32 -o vision_mouse_sender.exe
 ```
+
+Run the sender from the `sender/` directory with:
+
+```bash
+./vision_mouse_sender <IP> <port> <dx> <dy> [count] [interval_ms]
+```
+
+By default, the sender transmits 20 packets 50 milliseconds apart (20 Hz).
+The optional `count` and `interval_ms` arguments configure the finite test
+sequence. Use `count` equal to `1` for a single packet.
 
 ## Quick start
 
@@ -137,7 +148,7 @@ terminal to stop listening.
 
 - [x] Prove UDP connectivity between the Raspberry Pi and laptop
 - [x] Move the laptop cursor from a relative movement packet
-- [ ] Implement a reusable C++ UDP sender
+- [x] Implement a reusable C++ UDP sender
 - [ ] Connect OpenCV tracking output to the sender
 - [ ] Add sensitivity, dead-zone, smoothing, and rate controls
 - [ ] Validate packet source and reject malformed or excessive movement

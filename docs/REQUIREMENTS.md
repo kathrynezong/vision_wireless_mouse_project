@@ -22,7 +22,8 @@ The initial system uses UDP communication over a local network.
 - The transmission frequency shall be configurable.
 - The sender shall support clean termination.
 
-**Status:** Planned.
+**Status:** Implemented for finite test sequences. The default is 20
+packets at 20 Hz, with configurable packet count and interval.
 
 ### FR-03: Vision Tracking
 
