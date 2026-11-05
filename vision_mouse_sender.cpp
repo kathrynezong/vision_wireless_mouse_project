@@ -31,7 +31,7 @@ void closeSocket(SocketHandle socketHandle) {
 
 int main(int argc, char* argv[]) {
 
-    // Step 1: Validate command-line arguments
+    // Validate command-line arguments
     if (argc != 5) {
         std::cerr << "Usage: " << argv[0]
                   << " <IP> <port> <dx> <dy>\n";
@@ -63,7 +63,7 @@ int main(int argc, char* argv[]) {
     }
 #endif
 
-    // Step 2: Create UDP socket
+    // Create UDP socket
     SocketHandle sock = socket(AF_INET, SOCK_DGRAM, 0);
 
     if (sock == InvalidSocket) {
@@ -76,7 +76,7 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    // Step 3: Configure destination
+    // Configure destination
     sockaddr_in destination{};
     destination.sin_family = AF_INET;
     destination.sin_port = htons(port);
@@ -91,11 +91,11 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    // Step 4: Construct mouse movement message
+    // Construct mouse movement message
     std::string message =
         std::to_string(dx) + "," + std::to_string(dy);
 
-    // Step 5: Send UDP packet
+    // Send UDP packet
     int sent = sendto(
         sock,
         message.c_str(),
@@ -127,7 +127,7 @@ int main(int argc, char* argv[]) {
 
     std::cout << "Sent: " << message << "\n";
 
-    // Step 6: Clean up
+    // Clean up
     closeSocket(sock);
 #ifdef _WIN32
     WSACleanup();
