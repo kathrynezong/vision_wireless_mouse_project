@@ -71,7 +71,8 @@ Cursor Movement
 **Objective:** Implement computer vision to detect and track the target using a camera.
 
 ### Tasks
-- [ ] Set up camera access on the Linux device.
+- [x] Set up webcam access with a standalone C++ capture test.
+- [ ] Set up camera access on the Raspberry Pi.
 - [ ] Evaluate a suitable computer vision framework (e.g., OpenCV).
 - [ ] Implement real-time frame capture and processing.
 - [ ] Select and implement a tracking approach.

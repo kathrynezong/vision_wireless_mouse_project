@@ -6,3 +6,7 @@ venv/
 .vscode/
 .DS_Store
 Thumbs.db
+vcpkg_installed/
+vision/*.exe
+vision/*.obj
+*.obj

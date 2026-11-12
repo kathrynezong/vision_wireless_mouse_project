@@ -77,6 +77,28 @@ On Windows with MinGW, use:
 g++ -std=c++17 -Wall -Wextra -pedantic main.cpp udp_sender.cpp -lws2_32 -o vision_mouse_sender.exe
 ```
 
+The first computer-vision test is a standalone C++ webcam viewer. After
+installing OpenCV, compile it from the project root on Linux with:
+
+```bash
+g++ -std=c++17 -Wall -Wextra -pedantic vision/webcam_test.cpp \
+    $(pkg-config --cflags --libs opencv4) -o vision/webcam_test
+```
+
+Run it with the default camera:
+
+```bash
+./vision/webcam_test
+```
+
+Pass a different camera index when needed:
+
+```bash
+./vision/webcam_test 1
+```
+
+The test displays camera frames and exits when `q`, `Q`, or Escape is pressed.
+
 Run the sender from the `sender/` directory with:
 
 ```bash
@@ -149,6 +171,7 @@ terminal to stop listening.
 - [x] Prove UDP connectivity between the Raspberry Pi and laptop
 - [x] Move the laptop cursor from a relative movement packet
 - [x] Implement a reusable C++ UDP sender
+- [x] Create a standalone C++ webcam capture test
 - [ ] Connect OpenCV tracking output to the sender
 - [ ] Add sensitivity, dead-zone, smoothing, and rate controls
 - [ ] Validate packet source and reject malformed or excessive movement

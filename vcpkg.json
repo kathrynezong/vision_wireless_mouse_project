@@ -1,0 +1,8 @@
+{
+  "name": "wireless-mouse-project",
+  "version-string": "0.1.0",
+  "dependencies": [
+    "opencv4"
+  ],
+  "builtin-baseline": "661e42cd1600603016ced1d76a15359e7dade9f5"
+}

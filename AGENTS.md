@@ -78,7 +78,8 @@ When assisting with development:
 - Basic UDP sender: Implemented and manually verified.
 - Continuous UDP transmission: Finite test sequence implemented; network
   reliability testing remains.
-- Computer vision tracking: Not yet implemented.
+- Computer vision tracking: Webcam capture test implemented; tracking not yet
+  implemented.
 - Vision-to-cursor integration: Not yet implemented.
 
 Update this section as project milestones are completed.
