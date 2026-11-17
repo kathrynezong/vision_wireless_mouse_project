@@ -32,7 +32,8 @@ packets at 20 Hz, with configurable packet count and interval.
 - The tracking component shall output target coordinates.
 - The system shall handle target detection failures.
 
-**Status:** Planned.
+**Status:** Python MediaPipe prototype implemented. Raspberry Pi and C++
+integration remain planned.
 
 ### FR-04: Movement Processing
 
@@ -41,9 +42,24 @@ packets at 20 Hz, with configurable packet count and interval.
 - The system shall support techniques to reduce unintended cursor jitter.
 - The system shall avoid unintended movement when valid tracking data is unavailable.
 
-**Status:** Planned.
+**Status:** Absolute cursor mapping and exponential smoothing are implemented
+in the local Python prototype. Relative displacement and UDP integration remain
+planned.
 
-### FR-05: System Integration
+### FR-05: Gesture Input
+
+- Index fingertip movement shall control the cursor while in move mode.
+- A confirmed thumb-index pinch shall produce one left click until released.
+- An index-and-middle-finger gesture shall pause cursor movement and produce
+  vertical scrolling.
+- Click, scroll, and move actions shall be mutually exclusive.
+- Disabled control or tracking loss shall produce no mouse action.
+
+**Status:** Implemented in the local Python prototype with frame confirmation,
+pinch hysteresis, and an emergency enable/disable control. Manual webcam tuning
+remains.
+
+### FR-06: System Integration
 
 - The vision, movement processing, and networking modules shall work together.
 - The system shall support real-time cursor control.
@@ -82,17 +98,16 @@ Specific quantitative targets will be established through prototype measurements
 | Sender | C++17 on Linux | Implemented |
 | Transport | UDP | Implemented |
 | Receiver | Existing laptop mouse receiver | Working in basic test |
-| Computer vision | To be determined | Planned |
-| Movement filtering | To be determined | Planned |
+| Computer vision | MediaPipe Python prototype | Prototype implemented |
+| Movement filtering | Exponential smoothing | Prototype implemented |
 | Build system | g++ currently | In use |
 
 ## 5. Open Design Questions
 
 - What camera and Linux hardware will be used?
-- What exactly will the camera track?
-- What tracking algorithm is most appropriate?
+- Should MediaPipe remain the final hand-tracking framework on Raspberry Pi?
 - What update frequency will provide acceptable responsiveness?
-- How will mouse clicking and scrolling be supported?
+- What gesture thresholds work reliably across users and camera conditions?
 - What latency and accuracy targets are acceptable?
 - Will the system use calibration or a fixed sensitivity?
 

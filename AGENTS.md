@@ -78,8 +78,10 @@ When assisting with development:
 - Basic UDP sender: Implemented and manually verified.
 - Continuous UDP transmission: Finite test sequence implemented; network
   reliability testing remains.
-- Computer vision tracking: Webcam capture test implemented; tracking not yet
-  implemented.
+- Computer vision tracking: C++ webcam capture and Python MediaPipe hand
+  landmark prototypes implemented; Raspberry Pi validation remains.
+- Local gesture control: Python move, left-click, and scroll state machine
+  implemented with automated tests; manual webcam tuning remains.
 - Vision-to-cursor integration: Not yet implemented.
 
 Update this section as project milestones are completed.

@@ -79,6 +79,8 @@ Cursor Movement
 - [ ] Extract target coordinates (x, y) from each frame.
 - [ ] Visualize tracking results for debugging.
 - [ ] Handle situations where tracking is lost.
+- [x] Prototype MediaPipe hand landmark tracking in Python.
+- [x] Reset local cursor control when hand tracking is lost.
 
 **Deliverable:** A standalone vision tracking module that continuously outputs target coordinates.
 
@@ -98,6 +100,10 @@ Cursor Movement
 - [ ] Implement a dead zone to prevent unintended movement.
 - [ ] Handle coordinate scaling and orientation.
 - [ ] Test movement accuracy and responsiveness.
+- [x] Prototype absolute cursor mapping with exponential smoothing in Python.
+- [x] Implement mutually exclusive move, click, and scroll gesture states.
+- [x] Add automated tests for gesture confirmation and hysteresis.
+- [ ] Tune gesture and smoothing thresholds with real webcam testing.
 
 **Deliverable:** A movement processing module that converts computer vision coordinates into mouse commands.
 
@@ -164,8 +170,8 @@ Cursor Movement
 
 Potential features to explore after the core system is working:
 
-- Mouse clicking and gesture recognition.
-- Scrolling functionality.
+- Drag-and-drop and right-click gestures.
+- Additional configurable gestures.
 - Adaptive movement sensitivity.
 - Improved tracking using machine learning.
 - Automatic device discovery on the local network.
@@ -181,8 +187,8 @@ Potential features to explore after the core system is working:
 |---|---|---|
 | 1 | UDP Communication | Completed (core functionality) |
 | 2 | Continuous Mouse Communication | In progress |
-| 3 | Computer Vision and Tracking | Not Started |
-| 4 | Movement Processing and Cursor Mapping | Not Started |
+| 3 | Computer Vision and Tracking | Python prototype in progress |
+| 4 | Movement Processing and Cursor Mapping | Python prototype in progress |
 | 5 | System Integration | Not Started |
 | 6 | Performance Optimization and Testing | Not Started |
 | 7 | Documentation and Finalization | Not Started |

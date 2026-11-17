@@ -41,6 +41,12 @@ The receiver moves the cursor based on the received command.
 
 The basic single-command workflow has been manually verified.
 
+A separate Python prototype now uses MediaPipe hand landmarks to drive local
+cursor movement. A gesture processor selects one exclusive state per frame:
+idle, move, click, or scroll. It keeps landmark classification independent
+from PyAutoGUI mouse actions so the state transitions can be tested without
+moving the real cursor. This prototype is not connected to UDP yet.
+
 ## Planned Software Modules
 
 ### Vision Tracking
@@ -52,6 +58,12 @@ The basic single-command workflow has been manually verified.
 - Input: Tracked target coordinates
 - Output: Relative movement commands
 - Responsibilities: Displacement calculation, sensitivity, smoothing, dead zone
+
+### Gesture Processing
+- Input: MediaPipe hand landmarks and mouse-enabled state
+- Output: Exclusive gesture state, click request, or scroll steps
+- Responsibilities: Pinch hysteresis, gesture confirmation, scrolling, and
+  tracking-loss reset
 
 ### UDP Sender
 - Input: dx, dy

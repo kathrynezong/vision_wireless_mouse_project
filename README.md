@@ -17,8 +17,9 @@ lightweight UDP receiver that controls the laptop cursor with PyAutoGUI.
 | Pi-to-laptop network test | Verified |
 | Relative cursor movement | Verified |
 | C++ UDP sender | Continuous test sequence implemented |
-| OpenCV tracking integration | Planned |
-| Smoothing and gesture input | Planned |
+| Python hand tracking prototype | Implemented; webcam tuning pending |
+| Local cursor and gesture input | Implemented; manual testing pending |
+| C++/UDP vision integration | Planned |
 
 ## How it works
 
@@ -99,6 +100,41 @@ Pass a different camera index when needed:
 
 The test displays camera frames and exits when `q`, `Q`, or Escape is pressed.
 
+### Python hand-gesture prototype
+
+Install the Python vision dependencies from the project root:
+
+```bash
+python -m pip install -r vision/requirements.txt
+```
+
+Run the MediaPipe webcam prototype:
+
+```bash
+python vision/hand_tracker_webcam.py
+```
+
+Mouse control starts disabled. Press `M` to enable or disable it and `Q` to
+quit. PyAutoGUI's corner fail-safe remains enabled.
+
+The prototype uses four exclusive gesture states:
+
+| State | Input | Behavior |
+| --- | --- | --- |
+| `IDLE` | Control disabled or no hand | Produces no mouse action |
+| `MOVE` | Index fingertip movement | Moves the cursor with smoothing |
+| `CLICK` | Thumb-index pinch | Produces one left click per pinch |
+| `SCROLL` | Index and middle extended; ring and pinky folded | Pauses cursor movement and scrolls vertically |
+
+Entering `SCROLL` records the current knuckle height as the neutral position.
+Hold the hand above that position to scroll up continuously, hold it below to
+scroll down continuously, or return near the neutral position to stop. Leaving
+the gesture or losing hand tracking resets the neutral position.
+
+Pinch distances are measured relative to palm width to reduce sensitivity to
+camera distance. Gesture confirmation, pinch hysteresis, and scroll
+accumulation settings are defined in `vision/gesture_processor.py` for tuning.
+
 Run the sender from the `sender/` directory with:
 
 ```bash
@@ -162,6 +198,10 @@ terminal to stop listening.
 .
 |-- scripts/
 |   `-- test_wireless_movement.py  # Laptop UDP receiver
+|-- vision/
+|   |-- gesture_processor.py       # Gesture state machine
+|   |-- hand_tracker_webcam.py     # MediaPipe cursor prototype
+|   `-- requirements.txt           # Python vision dependencies
 |-- .gitignore
 `-- README.md
 ```
@@ -172,10 +212,11 @@ terminal to stop listening.
 - [x] Move the laptop cursor from a relative movement packet
 - [x] Implement a reusable C++ UDP sender
 - [x] Create a standalone C++ webcam capture test
+- [x] Prototype smoothed cursor movement and core hand gestures in Python
 - [ ] Connect OpenCV tracking output to the sender
 - [ ] Add sensitivity, dead-zone, smoothing, and rate controls
 - [ ] Validate packet source and reject malformed or excessive movement
-- [ ] Add click and gesture events
+- [ ] Extend the UDP protocol and receiver for click and scroll events
 - [ ] Document installation and startup for both devices
 
 ## Safety and security
@@ -194,7 +235,10 @@ packet bounds, and provide a dedicated enable/disable control.
 - The receiver must be running on the laptop being controlled.
 - UDP packets may be lost, duplicated, forged, or delivered out of order.
 - The current receiver accepts movement from any reachable sender.
-- Camera tracking is not yet connected to the network transport.
+- Python camera tracking and gestures are not yet connected to the network
+  transport.
+- Gesture thresholds have automated state-machine tests but still require
+  manual tuning with a real webcam, lighting conditions, and hand positions.
 - This project does not emulate a native USB or Bluetooth HID device.
 
 ## Contributing
