@@ -6,6 +6,8 @@ import cv2
 import mediapipe as mp
 import pyautogui
 
+from gesture_processor import GestureProcessor, GestureState
+
 
 # ==========================================
 # Configuration
@@ -34,6 +36,7 @@ pyautogui.PAUSE = 0
 
 previous_mouse_x = None
 previous_mouse_y = None
+gesture_processor = GestureProcessor()
 
 
 # ==========================================
@@ -208,6 +211,7 @@ def main():
     print("Press M to enable/disable mouse control")
     print("Press Q to quit")
     print("Mouse control starts OFF")
+    print("Gestures: index to move, pinch to click, two fingers to scroll")
 
     try:
         with HandLandmarker.create_from_options(
@@ -257,22 +261,42 @@ def main():
                     # Draw hand and get index fingertip
                     tip = draw_hand(frame, hand)
 
-                    # Move cursor only when enabled
-                    if MOUSE_ENABLED:
-                        try:
+                    gesture = gesture_processor.update(
+                        hand,
+                        MOUSE_ENABLED,
+                    )
+
+                    # Gesture states are exclusive so scrolling and clicking
+                    # cannot also move the cursor in the same frame.
+                    try:
+                        if gesture.state == GestureState.MOVE:
                             move_mouse(tip.x, tip.y)
 
-                        except pyautogui.FailSafeException:
-                            MOUSE_ENABLED = False
-                            previous_mouse_x = None
-                            previous_mouse_y = None
-                            print(
-                                "Mouse disabled: "
-                                "PyAutoGUI fail-safe triggered"
-                            )
+                        elif gesture.click_requested:
+                            pyautogui.click()
+
+                        elif (
+                            gesture.state == GestureState.SCROLL
+                            and gesture.scroll_steps
+                        ):
+                            pyautogui.scroll(gesture.scroll_steps)
+
+                    except pyautogui.FailSafeException:
+                        MOUSE_ENABLED = False
+                        gesture_processor.reset()
+                        previous_mouse_x = None
+                        previous_mouse_y = None
+                        print(
+                            "Mouse disabled: "
+                            "PyAutoGUI fail-safe triggered"
+                        )
 
                 else:
                     # Reset smoothing when tracking is lost
+                    gesture = gesture_processor.update(
+                        None,
+                        MOUSE_ENABLED,
+                    )
                     previous_mouse_x = None
                     previous_mouse_y = None
 
@@ -285,6 +309,17 @@ def main():
                         (0, 0, 255),
                         2
                     )
+
+                gesture_text = f"Gesture: {gesture.state.value}"
+                cv2.putText(
+                    frame,
+                    gesture_text,
+                    (10, 125),
+                    cv2.FONT_HERSHEY_SIMPLEX,
+                    0.7,
+                    (255, 255, 0),
+                    2
+                )
 
                 # ==================================
                 # FPS calculation
@@ -356,6 +391,7 @@ def main():
                 if key == ord("m"):
                     MOUSE_ENABLED = not MOUSE_ENABLED
 
+                    gesture_processor.reset()
                     previous_mouse_x = None
                     previous_mouse_y = None
 
